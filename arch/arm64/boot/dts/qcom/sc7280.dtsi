@@ -187,6 +187,17 @@
 			qcom,client-id = <1>;
 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
 		};
+
+		hexagon_linux: memory@a0000000 {
+			reg = <0 0xa0000000 0 0x20000000>;
+		};
+
+               snull_net_mem: snull_net_mem@d7c00000 {
+                       compatible = "removed-dma-pool";
+                       no-map;
+                       reg = <0 0xd7c00000 0 0x20000>;
+               };
+
 	};
 
 	cpus {
@@ -975,6 +986,19 @@
 			#power-domain-cells = <1>;
 			power-domains = <&rpmhpd SC7280_CX>;
 		};
+// XXX_SM
+                snull_net@d7c10000 {
+                        compatible = "qcom,snull-eth";
+			interrupts = <GIC_SPI 575 IRQ_TYPE_EDGE_RISING>;
+			//interrupts = <GIC_SPI 228 IRQ_TYPE_LEVEL_HIGH>;
+                        memory-region = <&snull_net_mem>;
+                        reg = <0x00 0xd7c10000 0x00 0x10000
+                               0x00 0xd7c00000 0x00 0x10000
+                               0x00 0x17C00000 0x00 0x10000>; // INTU_IPC
+                        qcom,snull-irq-offset = <0xC>; /* IPC_INTERRUPT_REGOFF */
+                        qcom,snull-irq-bitset = <0x20>; /* bit to set */
+                        qcom,snull-zero-mem = <0x1>;
+                };
 
 		ipcc: mailbox@408000 {
 			compatible = "qcom,sc7280-ipcc", "qcom,ipcc";

@@ -24,6 +24,14 @@
 		};
 	};
 
+    my_device@0A300000 {
+        compatible = "qcom";
+        reg = <0x0 0x0A300000 0x0 0x1000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        status = "okay";
+    };
+
 	psci {
 		mode-bootloader = <0x10001 0x2>;
 		mode-edl = <0 0x1>;
@@ -50,8 +58,8 @@
 		};
 
 		cdsp_mem: cdsp@88900000 {
+			device_type = "memory";
 			reg = <0x0 0x88900000 0x0 0x1e00000>;
-			no-map;
 		};
 
 		cvp_mem: cvp@8ae00000 {

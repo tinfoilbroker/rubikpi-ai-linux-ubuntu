@@ -154,6 +154,12 @@ static irqreturn_t q6v5_ready_interrupt(int irq, void *data)
  */
 int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
 {
+/**
+ * This will allow the remote processor to continue to run.
+ * Non-standard software may not correctly signal back.
+ **/
+	return 0;
+
 	int ret;
 
 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
